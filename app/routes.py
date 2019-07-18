@@ -10,7 +10,7 @@ def index():
 
 @app.route('/class_select', methods = ['GET','POST'])
 def class_select():
-    userdata = formopener.dict_from(request.form)
+    userdata = request.form
     race = userdata['race']
     job = userdata['job']
     background = userdata['background']
