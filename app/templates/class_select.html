@@ -4,50 +4,185 @@
         <link rel="stylesheet" type="text/css" href="/static/style.css">
     </head>
     <body>
-        <h2>Modifiers</h2>
-        <p>Strength Modifier: +{{raceStats.strMod}}</p>
-        <p>Dexterity Modifier: +{{raceStats.dexMod}}</p>
-        <p>Constitution Modifier: +{{raceStats.conMod}}</p>
-        <p>Intelligence Modifier: +{{raceStats.intMod}}</p>
-        <p>Wisdom Modifier: +{{raceStats.wisMod}}</p>
-        <p>Charisma Modifier: +{{raceStats.chaMod}}</p>
-        <p>Size: {{raceStats.size}}</p>
-        <p>Speed: {{raceStats.speed}}</p>
+        <h1>Level {{level}} {{race}} {{job}} {{background}}</h1>
+        <p><b>Proficiency Bonus: </b>+{{barbTable[level].profBonus}}</p>
+        <p><b>Modifiers: </b><br>
+        Strength Modifier: +{{raceStats.strMod}}<br>
+        Dexterity Modifier: +{{raceStats.dexMod}}<br>
+        Constitution Modifier: +{{raceStats.conMod}}<br>
+        Intelligence Modifier: +{{raceStats.intMod}}<br>
+        Wisdom Modifier: +{{raceStats.wisMod}}<br>
+        Charisma Modifier: +{{raceStats.chaMod}}<br>
         
-        <h2>Languages: </h2>
+        <p><b>Features: </b><br>
+        {% for x in range(1, level + 1) %}
+            {% for y in barbTable[x].features %}
+                {{y}}<br>
+            {% endfor %}
+        {% endfor %}
         
+        {% for x in raceStats.raceTraits %}
+            {{x[0]}}<br>
+        {% endfor %}
+        
+        {{backStats.feature}}
+        </p>
+        <p><b>Languages: </b><br>
         {% for x in raceStats.languages %}
-            <li>{{x}}</li>
+            {{x}}<br>
         {% endfor %} 
+        
+        {{backStats.languages}}
+        </p>
+        
+        <p><b>Equipment: </b><br>
+        {% for x in jobStats.equipment %}
+            {{x}}<br>
+        {% endfor %} 
+        {% for x in backStats.equipment %}
+            {{x}}<br>
+        {% endfor %} 
+        
+        
+        <h2>Race Features: </h2>
+        
         {% for x in raceStats.raceTraits %}
             <h3><b>{{x[0]}}</b></h3>
             <p>{{x[1]}}</p>
+            {% if x[0] == "Draconic Ancestry" %}
+                <table>
+                    <tr>
+                        <th>Dragon</th>
+                        <th>Damage Type</th>
+                        <th>Breath Weapon</th>
+                    </tr>
+                    <tr>
+                        <td>Black</td>
+                        <td>Acid</td>
+                        <td>5 by 30 ft. line (Dex. save)</td>
+                    </tr>
+                    <tr>
+                        <td>Blue</td>
+                        <td>Lightning</td>
+                        <td>5 by 30 ft. line (Dex. save)</td>
+                    </tr>
+                    <tr>
+                        <td>Brass</td>
+                        <td>Fire</td>
+                        <td>5 by 30 ft. line (Dex. save)</td>
+                    </tr>
+                    <tr>
+                        <td>Bronze</td>
+                        <td>Lightning</td>
+                        <td>5 by 30 ft. line (Dex. save)</td>
+                    </tr>
+                    <tr>
+                        <td>Copper</td>
+                        <td>Acid</td>
+                        <td>5 by 30 ft. line (Dex. save)</td>
+                    </tr>
+                    <tr>
+                        <td>Gold</td>
+                        <td>Fire</td>
+                        <td>15 ft. cone (Dex. Save)</td>
+                    </tr>
+                    <tr>
+                        <td>Green</td>
+                        <td>Poison</td>
+                        <td>15 ft. cone (Con. Save)</td>
+                    </tr>
+                    <tr>
+                        <td>Red</td>
+                        <td>Fire</td>
+                        <td>15 ft. cone (Dex. Save)</td>
+                    </tr>
+                    <tr>
+                        <td>Silver</td>
+                        <td>Cold</td>
+                        <td>15 ft. cone (Con. Save)</td>
+                    </tr>
+                    <tr>
+                        <td>White</td>
+                        <td>Cold</td>
+                        <td>15 ft. cone (Con. Save)</td>
+                    </tr>
+                </table>
+            {% endif %}
         {% endfor %} 
         <h3><b>{{backStats.feature}}</b></h3>
         <p>{{backStats.featureDesc}}</p>
-        {% if race == "Dragonborn" %}
-            <table>
-                <tr>
-                    <th>Dragon</th>
-                    <th>Damage Type</th>
-                    <th>Breath Weapon</th>
-                </tr>
-                <tr>
-                    <th>Black</th>
-                    <th>Acid</th>
-                    <th>5 by 30 ft. line (Dex. save)</th>
-                </tr>
-            </table>
-        {% endif %}
+        
+        
         <br>
         
+        <h2><b>Class Features</b></h2>
+        {% if job == "Barbarian" %}
+            <table>
+            <tr>
+                <th>Level</th>
+                <th>Proficiency Bonus</th>
+                <th>Features</th>
+                <th>Rages</th>
+                <th>Rage Damage</th>
+            </tr>
+            {% for x in range(1, 21) %}
+                <tr>
+                    <td>{{x}}</td>
+                    <td>
+                        +{{barbTable[x].profBonus}}
+                    </td>
+                    <td>
+                        {% for y in barbTable[x].features %}
+                            {{y}}<br>
+                        {% endfor %}
+                    </td>
+                    <td>{{barbTable[x].rages}}</td>
+                    <td>+{{barbTable[x].rageDamage}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+        {% if job == "Bard" %}
+            <table>
+            <tr>
+                <th>Level</th>
+                <th>Proficiency Bonus</th>
+                <th>Features</th>
+                <th>Cantrips Known</th>
+                <th>Spells Known</th>
+                <th>
+            </tr>
+            {% for x in range(1, 11) %}
+                <tr>
+                    <td>{{x}}</td>
+                    <td>
+                        +{{bardTable[x].profBonus}}
+                    </td>
+                    <td>
+                        {% for y in bardTable[x].features %}
+                            {{y}}<br>
+                        {% endfor %}
+                    </td>
+                    <td>{{bardTable[x].cantripsKnown}}</td>
+                    <td>{{bardTable[x].spellsKnown}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
         
-        <p>Hit Dice: {{jobStats.hitDice}}</p>
-        <p>Armor Proficiencies: {{jobStats.armorProf}}</p>
-        <p>Weapon Proficiencies: {{jobStats.weaponProf}}</p>
-        <p>Tool Proficiencies: {{jobStats.toolProf}}</p>
-        <p>Saving Throw Proficiencies: {{jobStats.savingThrows}}</p>
-        <p>Skill Proficiencies: {{backStats.skillProf}}, {{jobStats.skillProf}}</p>
+        {% for x in jobStats.classTraits %}
+            <h3>{{x[0]}}</h3>
+            {% autoescape false %}
+                <p>{{x[1]}}</p>
+            {% endautoescape %}
+        {% endfor %} 
+        
+        <p><b>Hit Dice:</b> {{jobStats.hitDice}}</p>
+        <p><b>Armor Proficiencies:</b> {{jobStats.armorProf}}</p>
+        <p><b>Weapon Proficiencies</b>: {{jobStats.weaponProf}}</p>
+        <p><b>Tool Proficiencies</b>: {{jobStats.toolProf}}</p>
+        <p><b>Saving Throw Proficiencies</b>: {{jobStats.savingThrows}}</p>
+        <p><b>Skill Proficiencies</b>: {{backStats.skillProf}}, {{jobStats.skillProf}}</p>
         <br>
         <p>Additional Skill Proficiencies: {{backStats.skillProf}}</p>
         <p>Additional Languages: {{backStats.languages}}</p>
