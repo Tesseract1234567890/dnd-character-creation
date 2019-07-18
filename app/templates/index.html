@@ -1,12 +1,27 @@
 <html>
     <head>
         <title>Welcome!</title>
+        <link rel="stylesheet" type="text/css" href="static/style.css">
     </head>
     <body>
         <h1>Hello world!</h1>
         <p>We can build a full webpage here</p>
-        <form>
-            <input type="text" name="nickname" value="Enter your nickname"/>
+        <form action = '/class_select' method = 'post'>
+            <input list="races" name="race">
+            <datalist id="races">
+                <option value = "Dragonborn">
+                <option value = "Hill Dwarf">
+            </datalist>
+            <input list="classes" name="job">
+            <datalist id="classes">
+                <option value = "Barbarian">
+                <option value = "Barbarian">
+            </datalist>
+            <input list="backgrounds" name="background">
+            <datalist id="backgrounds">
+                <option value = "Acolyte">
+                <option value = "Acolyte">
+            </datalist>
             <input type="submit" value="Submit"/>
         </form>
     </body>

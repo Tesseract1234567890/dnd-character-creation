@@ -1,0 +1,58 @@
+<html>
+    <head>
+        <title>Welcome!</title>
+        <link rel="stylesheet" type="text/css" href="static/style.css">
+    </head>
+    <body>
+        <h2>Modifiers</h2>
+        <p>Strength Modifier: +{{raceStats.strMod}}</p>
+        <p>Dexterity Modifier: +{{raceStats.dexMod}}</p>
+        <p>Constitution Modifier: +{{raceStats.conMod}}</p>
+        <p>Intelligence Modifier: +{{raceStats.intMod}}</p>
+        <p>Wisdom Modifier: +{{raceStats.wisMod}}</p>
+        <p>Charisma Modifier: +{{raceStats.chaMod}}</p>
+        <p>Size: {{raceStats.size}}</p>
+        <p>Speed: {{raceStats.speed}}</p>
+        
+        <h2>Languages: </h2>
+        
+        {% for x in raceStats.languages %}
+            <li>{{x}}</li>
+        {% endfor %} 
+        {% for x in raceStats.raceTraits %}
+            <h3><b>{{x[0]}}</b></h3>
+            <p>{{x[1]}}</p>
+        {% endfor %} 
+        <h3><b>{{backStats.feature}}</b></h3>
+        <p>{{backStats.featureDesc}}</p>
+        {% if race == "Dragonborn" %}
+            <table>
+                <tr>
+                    <th>Dragon</th>
+                    <th>Damage Type</th>
+                    <th>Breath Weapon</th>
+                </tr>
+                <tr>
+                    <th>Black</th>
+                    <th>Acid</th>
+                    <th>5 by 30 ft. line (Dex. save)</th>
+                </tr>
+            </table>
+        {% endif %}
+        <br>
+        
+        
+        <p>Hit Dice: {{jobStats.hitDice}}</p>
+        <p>Armor Proficiencies: {{jobStats.armorProf}}</p>
+        <p>Weapon Proficiencies: {{jobStats.weaponProf}}</p>
+        <p>Tool Proficiencies: {{jobStats.toolProf}}</p>
+        <p>Saving Throw Proficiencies: {{jobStats.savingThrows}}</p>
+        <p>Skill Proficiencies: {{backStats.skillProf}}, {{jobStats.skillProf}}</p>
+        <br>
+        <p>Additional Skill Proficiencies: {{backStats.skillProf}}</p>
+        <p>Additional Languages: {{backStats.languages}}</p>
+        <p>Additional Equipment: {{backStats.equipment}}</p>
+        <p>Background Feature: {{backStats.feature}}</p>
+        <p>Background Feature Description: {{backStats.featureDesc}}</p>
+    </body>
+</html>
