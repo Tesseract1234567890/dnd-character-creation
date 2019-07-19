@@ -6,6 +6,44 @@
     <body>
         <h1>Level {{level}} {{race}} {{job}} {{background}}</h1>
         <p><b>Proficiency Bonus: </b>+{{barbTable[level].profBonus}}</p>
+        <p><b>Hit Points: </b>{{level}}{{jobStats.hitDice}} + {{level * raceStats.conMod}}</p>
+        <p><b>Armor Proficiencies: </b><br>
+        {% for x in jobStats.armorProf %}
+            {{x}}<br>
+        {% endfor %}
+        {% for x in raceStats.armorProf %}
+            {{x}}<br>
+        {% endfor %}
+        </p>
+        <p><b>Weapon Proficiencies: </b><br>
+        {% for x in jobStats.weaponProf %}
+            {{x}}<br>
+        {% endfor %}
+        {% for x in raceStats.weaponProf %}
+            {{x}}<br>
+        {% endfor %}
+        </p>
+        <p><b>Tool Proficiencies: </b><br>
+        {% for x in jobStats.toolProf %}
+            {{x}}<br>
+        {% endfor %}
+        {% for x in raceStats.toolProf %}
+            {{x}}<br>
+        {% endfor %}
+        </p>
+        <p><b>Skill Proficiencies: </b><br>
+        {% for x in jobStats.skillProf %}
+            {{x}}<br>
+        {% endfor %}
+        {% for x in raceStats.skillProf %}
+            {{x}}<br>
+        {% endfor %}
+        </p>
+        <p><b>Saving Throws: </b><br>
+        {% for x in jobStats.savingThrows %}
+            {{x}}<br>
+        {% endfor %}
+        </p>
         <p><b>Modifiers: </b><br>
         Strength Modifier: +{{raceStats.strMod}}<br>
         Dexterity Modifier: +{{raceStats.dexMod}}<br>
@@ -15,11 +53,19 @@
         Charisma Modifier: +{{raceStats.chaMod}}<br>
         
         <p><b>Features: </b><br>
-        {% for x in range(1, level + 1) %}
-            {% for y in barbTable[x].features %}
-                {{y}}<br>
+        {% if job == "Barbarian" %}
+                {% for x in range(1, level + 1) %}
+                    {% for y in barbTable[x].features %}
+                        {{y}}<br>
+                    {% endfor %}
+                {% endfor %}
+        {% elif job == "Bard" %}
+            {% for x in range(1, level + 1) %}
+                {% for y in bardTable[x].features %}
+                    {{y}}<br>
+                {% endfor %}
             {% endfor %}
-        {% endfor %}
+        {% endif %}
         
         {% for x in raceStats.raceTraits %}
             {{x[0]}}<br>
@@ -145,14 +191,25 @@
         {% if job == "Bard" %}
             <table>
             <tr>
-                <th>Level</th>
-                <th>Proficiency Bonus</th>
-                <th>Features</th>
-                <th>Cantrips Known</th>
-                <th>Spells Known</th>
-                <th>
+                <th rowspan="2">Level</th>
+                <th rowspan="2">Proficiency Bonus</th>
+                <th rowspan="2">Features</th>
+                <th rowspan="2">Cantrips Known</th>
+                <th rowspan="2">Spells Known</th>
+                <th colspan="9">Spell Slots Per Spell Level</th>
             </tr>
-            {% for x in range(1, 11) %}
+            <tr>
+                <th>1st</th>
+                <th>2nd</th>
+                <th>3rd</th>
+                <th>4th</th>
+                <th>5th</th>
+                <th>6th</th>
+                <th>7th</th>
+                <th>8th</th>
+                <th>9th</th>
+            </tr>
+            {% for x in range(1, 21) %}
                 <tr>
                     <td>{{x}}</td>
                     <td>
@@ -165,6 +222,16 @@
                     </td>
                     <td>{{bardTable[x].cantripsKnown}}</td>
                     <td>{{bardTable[x].spellsKnown}}</td>
+                    <td>{{bardTable[x].levelOneSlots}}</td>
+                    <td>{{bardTable[x].levelTwoSlots}}</td>
+                    <td>{{bardTable[x].levelThreeSlots}}</td>
+                    <td>{{bardTable[x].levelFourSlots}}</td>
+                    <td>{{bardTable[x].levelFiveSlots}}</td>
+                    <td>{{bardTable[x].levelSixSlots}}</td>
+                    <td>{{bardTable[x].levelSevenSlots}}</td>
+                    <td>{{bardTable[x].levelEightSlots}}</td>
+                    <td>{{bardTable[x].levelNineSlots}}</td>
+                    
                 </tr>
             {% endfor %}
         </table>
